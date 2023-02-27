@@ -58,11 +58,6 @@ r = 500;
 
 [logftrtot, dopp_cube, ftRtotMti] = signalProcess(dataMatrix, cpi_b, cpi_t, r, total_chirps);
 
-%% angle?
-save('Test.mat','ftRtotMti')
-a = real(ftRtotMti(:,:));
-b = imag(ftRtotMti(:,:));
-angle = deg2rad(atand(b./a));
 
 %% Plotting range time profile 
 
@@ -91,31 +86,31 @@ saveas(fig,'range.png')
 range2 = linspace(10,0.4,5);
 dfreq = linspace(-prf/2,prf/2,9);
 
-% figure(2)
-% doppname = 'Doppler.gif';
-% for j = 1:total_chirps/r
-%     fig2 = imagesc(fftshift(dopp_cube(:,:,j),2));
-%     xt2 = get(gca,'Xtick');
-%     set(gca,'XTick',xt2,'XTickLabel',[dfreq 2500])
-%     yt2 = get(gca,'YTick');
-%     set(gca,'YTick',yt2,'YTickLabel',range2,'YDir','reverse')
-%     xlabel('Doppler Frequency/Hz')
-%     ylabel('Range/m')
-%     title('Range vs Doppler Profile');
-% 
-%     drawnow
-%     frame = getframe(2);
-%     im = frame2im(frame);
-%     [imind,cm] = rgb2ind(im,256);
-%     if j == 1;
-%         imwrite(imind,cm,doppname,'gif', 'Loopcount',inf);
-%     else
-%         imwrite(imind,cm,doppname,'gif','WriteMode','append');
-%     end
-% 
-%     pause(0.01)
-% end
-% 
+figure(2)
+doppname = 'Doppler.gif';
+for j = 1:total_chirps/r
+    fig2 = imagesc(fftshift(dopp_cube(:,:,j),2));
+    xt2 = get(gca,'Xtick');
+    set(gca,'XTick',xt2,'XTickLabel',[dfreq 2500])
+    yt2 = get(gca,'YTick');
+    set(gca,'YTick',yt2,'YTickLabel',range2,'YDir','reverse')
+    xlabel('Doppler Frequency/Hz')
+    ylabel('Range/m')
+    title('Range vs Doppler Profile');
+
+    drawnow
+    frame = getframe(2);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+    if j == 1;
+        imwrite(imind,cm,doppname,'gif', 'Loopcount',inf);
+    else
+        imwrite(imind,cm,doppname,'gif','WriteMode','append');
+    end
+
+    pause(0.01)
+end
+
 
 %% CFAR Implementation
 
@@ -129,29 +124,29 @@ cfar_pfa = 0.28;       % Desired false alarm rate
 
 velAx = linspace(-prf/2,prf/2,9);
 
-% figure(3)
-% cdopname = 'CfarDopp.gif';
-% for l = 1:total_chirps/r
-%     fig3 = imagesc(fftshift(thres_res(:,:,l),2));
-%     xt3 = get(gca,'Xtick');
-%     set(gca,'XTick',xt3,'XTickLabel',[velAx 2500])
-%     yt3 = get(gca,'YTick');
-%     set(gca,'YTick',yt3,'YTickLabel',range2,'YDir','reverse')
-%     xlabel('Velocity/Hz')
-%     ylabel('Range/m')
-% 
-%     drawnow
-%     frame = getframe(3);
-%     im = frame2im(frame);
-%     [imind,cm] = rgb2ind(im,256);
-%     if l == 1;
-%         imwrite(imind,cm,cdopname,'gif', 'Loopcount',inf);
-%     else
-%         imwrite(imind,cm,cdopname,'gif','WriteMode','append');
-%     end
-% 
-%     pause(0.01)
-% end
+figure(3)
+cdopname = 'CfarDopp.gif';
+for l = 1:total_chirps/r
+    fig3 = imagesc(fftshift(thres_res(:,:,l),2));
+    xt3 = get(gca,'Xtick');
+    set(gca,'XTick',xt3,'XTickLabel',[velAx 2500])
+    yt3 = get(gca,'YTick');
+    set(gca,'YTick',yt3,'YTickLabel',range2,'YDir','reverse')
+    xlabel('Velocity/Hz')
+    ylabel('Range/m')
+
+    drawnow
+    frame = getframe(3);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+    if l == 1;
+        imwrite(imind,cm,cdopname,'gif', 'Loopcount',inf);
+    else
+        imwrite(imind,cm,cdopname,'gif','WriteMode','append');
+    end
+
+    pause(0.01)
+end
 
 
 %% Automated range reading & detected object velocity 
@@ -182,10 +177,8 @@ ylabel('velocity in m/s')
 grid minor; grid on;
 saveas(fig_v,'velocity.png')
 
-figure(6)
-plot(time_frame,azimuth,'ok');
 
-save('AutoRes.mat','distance','velocity','time_frame','azimuth')
+save('AutoRes.mat','distance','velocity','time_frame')
 
 timeElapsed = toc; %Clock stop measuring time elapsed
 procTime = timeElapsed/length(distance)
