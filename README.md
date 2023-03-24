@@ -27,6 +27,7 @@ Processing Algorithm Outline:
 10. The array is saved as distance, velocity, time_frame in a AutoRes.mat file.
 
 A new algorithm added for estimating angle of arrival of the detected object (angleEstimates.m). The algorithm follows the same step from the previous part but all the dataMatrix (Radar Cube) is treated in 3d matrix form where previously the signal from each receiver was added removing the phase information (2d). Until doppler frequency response is found at a specific distance and time, performing fft across the spatial dimension of the receiver channel will give us the angle of arrival represented by the peak of the figure. (illustrated below)
+
 ![3](https://user-images.githubusercontent.com/51969569/227518075-1ee237c5-8746-4557-9e7d-3730a083f76a.png)
 
 Then, applying a for loop across the whole time frame and capturing this angle of arrival at each time, the range vs angle plot could be obtained. (CFAR algorithm hasn't been applied to this algorithm.
