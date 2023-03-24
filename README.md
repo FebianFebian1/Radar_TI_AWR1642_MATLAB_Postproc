@@ -31,3 +31,7 @@ A new algorithm added for estimating angle of arrival of the detected object (an
 ![3](https://user-images.githubusercontent.com/51969569/227518075-1ee237c5-8746-4557-9e7d-3730a083f76a.png)
 
 Then, applying a for loop across the whole time frame and capturing this angle of arrival at each time, the range vs angle plot could be obtained. (CFAR algorithm hasn't been applied to this algorithm.
+
+The example of Radar Data can be found in this google drive folder: 
+(adc_data.bin is a normal simple walking in bull's eye sight of the radar field of view)
+https://drive.google.com/drive/folders/18UFQzmvEPq-yoX9U6ah0FN4QvQx4VoKh?usp=share_link
